@@ -1,17 +1,16 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:shopping_app/global_variables.dart';
-import 'package:shopping_app/product_card.dart';
-import 'package:shopping_app/product_details.dart';
+import 'package:shopping_app/widgets/global_variables.dart';
+import 'package:shopping_app/widgets/product_card.dart';
+import 'package:shopping_app/pages/product_details.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ProductList extends StatefulWidget {
+  const ProductList({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ProductList> createState() => _ProductListState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ProductListState extends State<ProductList> {
   final List<String> filters = const ['All', 'Adidas', 'Nike', 'Bata'];
 
   late String selectedFilter;
@@ -31,8 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         left: Radius.circular(50),
       ),
     );
-    return Scaffold(
-        body: SafeArea(
+    return SafeArea(
       child: Column(
         children: [
           Row(
@@ -114,6 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-    ));
+    );
   }
 }

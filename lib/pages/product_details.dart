@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/providers/cart_provider.dart';
 
 class ProductsDetails extends StatefulWidget {
   final Map<String, Object> product;
@@ -29,7 +31,10 @@ class _ProductsDetailsState extends State<ProductsDetails> {
           const Spacer(),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Image.asset(widget.product['imageUrl'] as String),
+            child: Image.asset(
+              widget.product['imageUrl'] as String,
+              height: 50,
+            ),
           ),
           const Spacer(
             flex: 2,
@@ -85,11 +90,36 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                         Icons.shopping_cart,
                         color: Colors.black,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (selectedSize != 0) {
+                          Provider.of<CartProvider>(context, listen: false)
+                              .addProduct(
+                            {
+                              'id': widget.product['id'],
+                              'title': widget.product['title'],
+                              'price': widget.product['price'],
+                              'imageUrl': widget.product['imageUrl'],
+                              'company': widget.product['company'],
+                              'size': selectedSize,
+                            },
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Product added successfully'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please select a size!'),
+                            ),
+                          );
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.primary,
-                          minimumSize: const Size(double.infinity, 50)),
+                          fixedSize: const Size(350, 50)),
                       label: const Text(
                         "Add to Cart",
                         style: TextStyle(color: Colors.black, fontSize: 18),
